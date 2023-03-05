@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Component
 public class XMLWriter {
-    private static final Logger logger = LogManager.getLogger(XMLWriter.class);
+    private final Logger logger = LogManager.getLogger(XMLWriter.class);
     private final WordChecks wordChecks;
 
     public XMLWriter(WordChecks wordChecks) {

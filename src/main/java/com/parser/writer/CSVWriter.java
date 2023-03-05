@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Component
 public class CSVWriter {
-    private static final Logger logger = LogManager.getLogger(CSVWriter.class);
+    private final Logger logger = LogManager.getLogger(CSVWriter.class);
 
     private final CSVHeaderWriter csvHeaderWriter;
     private final SentencesToWords sentencesToWords;

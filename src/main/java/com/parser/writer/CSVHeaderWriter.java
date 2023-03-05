@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Component
 public class CSVHeaderWriter {
 
-    private static final Logger logger = LogManager.getLogger(CSVHeaderWriter.class);
+    private final Logger logger = LogManager.getLogger(CSVHeaderWriter.class);
     private String[] csvHeader;
 
     private void createHeader(int wordCount) {

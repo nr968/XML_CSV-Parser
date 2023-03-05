@@ -22,7 +22,7 @@ public class CSVWriterTest {
     private final Logger logger = LogManager.getLogger(CSVWriterTest.class);
 
     @Test
-    public void testCSVConverter() {
+    public void testCSVConverter() throws IOException {
         CSVHeaderWriter csvHeaderWriter = new CSVHeaderWriter();
         SentencesToWords sentencesToWords = new SentencesToWords();
         List<String[]> words = new LinkedList<>();
@@ -31,15 +31,20 @@ public class CSVWriterTest {
         CSVWriter csvWriter;
         csvWriter = new CSVWriter(csvHeaderWriter, sentencesToWords);
         csvWriter.createCSVDocument("test_csvConverter.csv");
+        BufferedReader reader = null;
         try {
             csvWriter.CSVConverter(words);
             String actual;
-            BufferedReader reader = new BufferedReader(new FileReader("temp.csv"));
+            reader = new BufferedReader(new FileReader("temp.csv"));
             while ((actual = reader.readLine()) != null) {
                 Assert.assertEquals(expected, actual);
             }
         } catch (IOException ex) {
             logger.error("An exception occurred while reading the file {0}", ex);
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
         }
     }
 
