@@ -3,17 +3,22 @@ package com.parser.service;
 import com.parser.writer.CSVWriter;
 import com.parser.domain.Sentence;
 import com.parser.writer.XMLWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+/**
+ * Service layer for XmlWriter and CsvWriter class
+ */
 @Service
 public class DocumentWriter {
-    @Autowired
-    private XMLWriter xmlWriter;
-    @Autowired
-    private CSVWriter csvWriter;
+    private final XMLWriter xmlWriter;
+    private final CSVWriter csvWriter;
+
+    public DocumentWriter(XMLWriter xmlWriter, CSVWriter csvWriter) {
+        this.xmlWriter = xmlWriter;
+        this.csvWriter = csvWriter;
+    }
 
     public void createDocument(String option, String outputFile) {
         switch (option) {

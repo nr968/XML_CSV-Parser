@@ -17,9 +17,9 @@ The application converts a given input file into XML formatted file and CSV form
    (-Xmx32m specifies JVM to run with max heap memory of 32 megabytes)
 
 5. Example :
-- On MacOS : java -jar -Xmx32m XmlCsvParser-1.0-SNAPSHOT-jar-with-dependencies.jar -i /Users/usr/inputFiles/small.in -o /Users/usr/outputFiles/small xml_csv
+- On MacOS : java -jar -Xmx32m Xml_Csv_parser-0.0.1-SNAPSHOT.jar -i "/Users/usr/inputFiles/small.in" -o "/Users/usr/outputFiles/small" xml_csv
 
-- On Windows : java -jar -Xmx32m XmlCsvParser-1.0-SNAPSHOT-jar-with-dependencies.jar -i "C:\Users\username\inputFiles\small.in" -o "C:\Users\username\outputFiles\small" xml_csv
+- On Windows : java -jar -Xmx32m Xml_Csv_parser-0.0.1-SNAPSHOT.jar -i "C:\Users\username\inputFiles\small.in" -o "C:\Users\username\outputFiles\small" xml_csv
 
 - On completion the output files will be generated in the mentioned outputFiles folder as small.xml and small.csv
 
@@ -28,9 +28,10 @@ The application converts a given input file into XML formatted file and CSV form
 - XmlCsvParserApplication.class : Entry Point for the application
 - ArgumentsCheck.class : Checks for the Arguments passed in the Command Line
 - FileParser.class : Takes the input file name from the command line argument and reads the contents of the file
-- TextTransform.class : The contents read in the FileParser class is passed here and this class splits the lines to sentences, sentences to words and sorts the words
+- SentenceToWords.class : The contents read in the FileParser class is passed here and this class splits the lines to sentences, sentences to words and sorts the words
+- SentenceToWordsService.class : Service layer for SentenceToWords class
 - Sentence.class : Model class which stores the sorted words
-- DocumentWriter.class : Calls XmlWriter and CsvWriter class methods 
+- DocumentWriter.class : Service layer for XmlWriter and CsvWriter class 
 - WordChecks.class : Checks the sorted words for special characters, tabs and cleans up the words 
 - XMLWriter.class : The sorted words are passed to XMLWriter class which writes to XML file
 - CSVWriter.class : The sorted words are passed to CSVWriter class which writes to temp CSV file

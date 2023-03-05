@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Model class which stores the sorted words
+ */
 @Component
 public class Sentence {
 

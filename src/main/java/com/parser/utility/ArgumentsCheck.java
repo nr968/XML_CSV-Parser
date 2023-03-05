@@ -5,17 +5,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+/**
+ * Checks for the Arguments passed in the Command Line
+ */
 @Component
 public class ArgumentsCheck {
     private final Logger logger = LogManager.getLogger(ArgumentsCheck.class);
-    private final String usageMessage = System.getProperty("os.name").toLowerCase().contains("mac") ? "<-i> " +
-            "<path/inputFile.extension> <-o> <path/outputFile>" : "<-i> <path\\inputFile.extension> <-o> " +
-            "<path\\outputFile>";
+    private final String usageMessage = System.getProperty("os.name").toLowerCase().contains("mac") ? "<-i> " + "<path/inputFile.extension> <-o> <path/outputFile>" : "<-i> <path\\inputFile.extension> <-o> " + "<path\\outputFile>";
 
     private void printUsage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("java -jar -Xmx32m jar-name.jar " + usageMessage + " -c conversionOption (xml_csv, xml, csv)", options);
     }
+
     public String[] validateArgument(String[] args) {
         Options options = new Options();
         Option input = new Option("i", "inputFile", true, "Path to the inputFile");
@@ -29,13 +31,7 @@ public class ArgumentsCheck {
             CommandLine cmd = parser.parse(options, args);
             if (cmd.hasOption("i") && cmd.hasOption("o") && cmd.hasOption("c")) {
                 String formatOption = cmd.getOptionValue("c");
-                if (formatOption.equalsIgnoreCase("xml_csv") || formatOption.equalsIgnoreCase("xml") || formatOption.equalsIgnoreCase("csv")) {
-                    return new String[]{cmd.getOptionValue("i"), cmd.getOptionValue("o"), formatOption};
-                } else {
-                    logger.error("{} is not a valid formatOption", formatOption);
-                    printUsage(options);
-                    return null;
-                }
+                return getOptions(options, cmd, formatOption);
             } else {
                 printUsage(options);
                 return null;
@@ -44,6 +40,16 @@ public class ArgumentsCheck {
             logger.error("Error in parsing arguments {0}", ex);
         }
         return null;
+    }
+
+    private String[] getOptions(Options options, CommandLine cmd, String formatOption) {
+        if (formatOption.equalsIgnoreCase("xml_csv") || formatOption.equalsIgnoreCase("xml") || formatOption.equalsIgnoreCase("csv")) {
+            return new String[]{cmd.getOptionValue("i"), cmd.getOptionValue("o"), formatOption};
+        } else {
+            logger.error("{} is not a valid formatOption", formatOption);
+            printUsage(options);
+            return null;
+        }
     }
 
     public String getUsageMessage() {
